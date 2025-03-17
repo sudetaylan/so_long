@@ -9,11 +9,15 @@ int map_rowlen(char *row)
     return i;
 }
 
-void    clean_rows(char *line)
+int arg_check(char *str, char *p)
 {
-	int	len;
+    int i;
 
-	len = map_rowlen(line);
-	if (len > 0 && line[len - 1] == '\n')
-		line[len - 1] = '\0';
+    i = map_rowlen(str) - 4;
+    while(str[i])
+    {
+        if(str[i++] != *p++)
+            return 0;
+    }
+    return 1;
 }

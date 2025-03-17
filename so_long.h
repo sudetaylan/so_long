@@ -45,10 +45,14 @@ int map_rowlen(char *row);
 int get_size(char *filename, t_game *game);
 int map_process(char **map, char *filename, t_game *game);
 char **parse_map(char *filename, t_game *game);
-void    clean_rows(char *line);
 int control_elements(t_game *game, int *exit, int *collectable,int *player);
 int control_walls(t_game *game);
 int   map_last(char *path, t_game *game);
 int check_map(t_game *game);
-int ft_perror(char *str);
+int arg_check(char *str, char *p);
+int	check_reachable(t_game *game);
+int compare_maps(char ***game_map, t_game *game);
+void flood_fill(char ***game_map, int p_x, int p_y, t_game *game);
+int copy_map(t_game *game, char ***game_map);
+
 #endif

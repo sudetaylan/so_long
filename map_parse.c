@@ -30,15 +30,17 @@ int    map_process(char **map, char *filename, t_game *game)
     int j;
     int fd;
     char *line;
+    int i;
 
     j = 0;
+    i = 0;
     fd = open(filename, O_RDONLY);
     if(fd < 0)
         return 0;
     while(j < game->height)
     {
         line = get_next_line(fd);
-        clean_rows(line);
+        line[map_rowlen(line)] = '\0';
         map[j] = line;
         j++;
     }
