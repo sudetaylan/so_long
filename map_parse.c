@@ -11,6 +11,8 @@ int get_size(char *filename, t_game *game)
     if(fd < 0)
         return 0;
     rows = get_next_line(fd);
+    if(!rows)
+        return 0;
     game->width = map_rowlen(rows);
     while (rows && ++height > 0)
     {
@@ -22,6 +24,7 @@ int get_size(char *filename, t_game *game)
             return (-1);
     }
     close(fd);
+    printf("%d", height);
     return (height);
 }
 
@@ -30,10 +33,8 @@ int    map_process(char **map, char *filename, t_game *game)
     int j;
     int fd;
     char *line;
-    int i;
 
     j = 0;
-    i = 0;
     fd = open(filename, O_RDONLY);
     if(fd < 0)
         return 0;
@@ -56,11 +57,13 @@ char **parse_map(char *filename, t_game *game)
     game->height = get_size(filename, game);
     if(game->height <= 0)
     {   
-        game->height == 0 ? perror("Map is empty. ") : perror("Map is not rectangle. ");
+        if(game->height == 0)
+            perror("Map is empty. ");
+        else
+            perror("Map is not rectangle. ");
         return (NULL);       
     }
-    map = (char **)malloc(sizeof(char *) * (game->height + 1));
-    printf("%d %d", game->width, game->height);
+    map = (char **)malloc(sizeof(char *) * (game->height + 1));    
     if(!map)
         return (NULL);
     map_process(map, filename, game);

@@ -1,4 +1,5 @@
 #include "so_long.h"
+
 int map_rowlen(char *row)
 {
     int i;

@@ -53,13 +53,9 @@ int	map_last(char *path, t_game *game)
 {
 	game->map = parse_map(path, game);
 	if (!game->map || !check_map(game) || !check_reachable(game))
-	{
 		return (0);
-	}
 	if (!init_window(game) || !load_textures(game))
-	{
 		return (0);
-	}
 	return (1);
 }
 
@@ -68,8 +64,9 @@ int	main(int argc, char **argv)
 	t_game	game;
 
 	init_param(&game);
-	if (argc != 2)
-		perror("Usage : ./so_long ./maps/Your map choice. ");
-	if (!map_last(argv[1], &game) || !arg_check(argv[1], ".ber"))
+	if (argc != 2 || !arg_check(argv[1], ".ber"))
+		perror("Usage : ./so_long ./maps/blabla.ber ");
+	if (!map_last(argv[1], &game))
+		perror("Map initilization is unsuccesfull");
 		return (0);
 }
