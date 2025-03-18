@@ -1,6 +1,5 @@
 #include "so_long.h"
-
-#include "so_long.h"
+#include <stdio.h>
 int	close_win(t_game *game)
 {
 	close_game(game);
@@ -33,8 +32,10 @@ static void	move_player(t_game *game, int dx, int dy)
 		game->collected++;
 		game->map[new_y][new_x] = '0';
 	}
+	printf("%d", game->player_x);
 	game->player_x = new_x;
 	game->player_y = new_y;
+	printf("%d", game->player_x);
 	game->moves++;
 	check_win_condition(game, new_x, new_y);
 }
