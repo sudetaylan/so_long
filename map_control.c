@@ -23,7 +23,7 @@ int check_map(t_game *game)
         perror("Invalid map: Number of elements are wrong. ");
         return 0;      
     }
-    game->item_count = collectable;
+    game->collect_count = collectable;
 	return (1);
 }
 int control_elements(t_game *game, int *exit, int *collectable,int *player)

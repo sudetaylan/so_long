@@ -1,6 +1,6 @@
 #include "so_long.h"
 #include <stdio.h>
-int get_size(char *filename, t_game *game)
+static int get_size(char *filename, t_game *game)
 {
     int height;
     char *rows;
@@ -11,8 +11,6 @@ int get_size(char *filename, t_game *game)
     if(fd < 0)
         return 0;
     rows = get_next_line(fd);
-    if(!rows)
-        return 0;
     game->width = map_rowlen(rows);
     while (rows && ++height > 0)
     {
@@ -24,11 +22,10 @@ int get_size(char *filename, t_game *game)
             return (-1);
     }
     close(fd);
-    printf("%d", height);
     return (height);
 }
 
-int    map_process(char **map, char *filename, t_game *game)
+static int    map_process(char **map, char *filename, t_game *game)
 {
     int j;
     int fd;

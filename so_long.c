@@ -5,8 +5,8 @@ static void	init_param(t_game *game)
 	game->mlx = NULL;
 	game->win = NULL;
 	game->map = NULL;
-	game->item_count = 0;
-	game->i_collected = 0;
+	game->collect_count = 0;
+	game->collected = 0;
 	game->moves = 0;
 	game->tile_size = 64;
 }
@@ -65,8 +65,12 @@ int	main(int argc, char **argv)
 
 	init_param(&game);
 	if (argc != 2 || !arg_check(argv[1], ".ber"))
-		perror("Usage : ./so_long ./maps/blabla.ber ");
+		perror("Usage : ./so_long ./maps/'file_name'.ber ");
 	if (!map_last(argv[1], &game))
 		perror("Map initilization is unsuccesfull");
-		return (0);
+	draw_map(&game);
+	mlx_hook(game.win, 17, 0, close_win, &game);
+	mlx_key_hook(game.win, handle_movements, &game);
+	mlx_loop(game.mlx);
+	return (0);
 }

@@ -17,7 +17,10 @@ SRCS        = so_long.c \
 			inc/gnl/get_next_line.c \
        		inc/gnl/get_next_line_utils.c \
 			map_control.c \
-			reach_map.c
+			reach_map.c \
+			draw.c \
+			moves.c \
+			end.c
 
 
 # -----------------------------------------------------------------------------

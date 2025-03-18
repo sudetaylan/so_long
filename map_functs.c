@@ -5,7 +5,7 @@ int map_rowlen(char *row)
     int i;
 
     i = 0;
-    while (row[i] != '\0' && row[i] != '\n')
+    while (row && row[i] != '\0' && row[i] != '\n')
         i++;
     return i;
 }
