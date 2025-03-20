@@ -13,10 +13,6 @@
 # define KEY_S 115
 # define KEY_D 100
 # define KEY_ESC 65307
-# define KEY_UP 65362
-# define KEY_LEFT 65361
-# define KEY_DOWN 65364
-# define KEY_RIGHT 65363
 
 typedef struct s_game
 {
@@ -45,17 +41,14 @@ int map_rowlen(char *row);
 char **parse_map(char *filename, t_game *game);
 int control_elements(t_game *game, int *exit, int *collectable,int *player);
 int control_walls(t_game *game);
-int   map_last(char *path, t_game *game);
 int check_map(t_game *game);
 int arg_check(char *str, char *p);
-int	check_reachable(t_game *game);
-int compare_maps(char **game_map, t_game *game);
-void flood_fill(char **game_map, int p_x, int p_y, t_game *game);
-int copy_map(t_game *game, char ***game_map);
 void	draw_map(t_game *game);
 int	close_win(t_game *game);
 int close_game(t_game *game);
 int	free_map(char **map, int height);
 int	handle_movements(int keycode, t_game *game);
+int	check_reachable(t_game *game);
+void	ft_putnbr(int nb);
 
 #endif

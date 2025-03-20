@@ -15,7 +15,7 @@ static int	init_window(t_game *game)
 	game->mlx = mlx_init();
 	if (!game->mlx)
 	{
-		write(1, "window init error\n", 18);
+		write(1, "Error\nWindow couldn't be opened\n", 34);
 		return (0);
 	}
 	game->win = mlx_new_window(game->mlx, game->width * game->tile_size,
@@ -29,10 +29,10 @@ static int	load_textures(t_game *game)
 	int	w;
 	int	h;
 
-	game->wall_img = mlx_xpm_file_to_image(game->mlx, "./textures/wall.xpm", &w,
-			&h);
 	game->floor_img = mlx_xpm_file_to_image(game->mlx, "./textures/floor.xpm",
 			&w, &h);
+	game->wall_img = mlx_xpm_file_to_image(game->mlx, "./textures/wall.xpm", &w,
+			&h);
 	game->player_img = mlx_xpm_file_to_image(game->mlx, "./textures/player.xpm",
 			&w, &h);
 	game->collect_img = mlx_xpm_file_to_image(game->mlx,
@@ -41,15 +41,15 @@ static int	load_textures(t_game *game)
 												&h);
 	game->exit_img = mlx_xpm_file_to_image(game->mlx, "./textures/exit.xpm", &w,
 			&h);
-	if (!game->wall_img || !game->floor_img || !game->player_img
+	if (!game->floor_img || !game->wall_img || !game->player_img
 		|| !game->collect_img || !game->exit_img)
 	{
-		write(1, "error loading textures\n", 23);
+		write(1, "Error\nTextures couldn't be loaded\n", 29);
 		return (0);
 	}
 	return (1);
 }
-int	map_last(char *path, t_game *game)
+static int	map_last(char *path, t_game *game)
 {
 	game->map = parse_map(path, game);
 	if (!game->map || !check_map(game) || !check_reachable(game))
@@ -65,9 +65,15 @@ int	main(int argc, char **argv)
 
 	init_param(&game);
 	if (argc != 2 || !arg_check(argv[1], ".ber"))
-		perror("Usage : ./so_long ./maps/'file_name'.ber ");
+	{
+		write(1, "Usage : ./so_long ./maps/'file_name'.ber ", 42);
+		return (0);	
+	}
 	if (!map_last(argv[1], &game))
-		perror("Map initilization is unsuccesfull");
+	{
+		write(1, "Error\nMap initilization is unsuccesfull", 40);
+		return (0);		
+	}
 	draw_map(&game);
 	mlx_hook(game.win, 17, 0, close_win, &game);
 	mlx_key_hook(game.win, handle_movements, &game);

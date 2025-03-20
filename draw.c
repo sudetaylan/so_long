@@ -6,17 +6,14 @@ static void	put_image(t_game *game, void *img, int x, int y)
 		y * game->tile_size);
 }
 
-static void	draw_image(t_game *game, int x, int y)
+static void	draw_image(t_game *game, int x, int y, char	element)
 {
-	char	current;
-
 	put_image(game, game->floor_img, x, y);
-	current = game->map[y][x];
-	if (current == '1')
+	if (element == '1')
 		put_image(game, game->wall_img, x, y);
-	if (current == 'C')
+	if (element == 'C')
 		put_image(game, game->collect_img, x, y);
-	if (current == 'E')
+	if (element == 'E')
 		put_image(game, game->exit_img, x, y);
 	if (x == game->player_x && y == game->player_y)
 		put_image(game, game->player_img, x, y);
@@ -33,7 +30,7 @@ void	draw_map(t_game *game)
 		x = 0;
 		while (x < game->width)
 		{
-			draw_image(game, x, y);
+			draw_image(game, x, y, game->map[y][x]);
 			x++;
 		}
 		y++;

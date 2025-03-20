@@ -10,17 +10,17 @@ int check_map(t_game *game)
     player = 0;
     if(!control_elements(game, &exit, &collectable, &player))
     {
-        perror("Invalid map: Map must consist 0, 1, P, E, C only. ");
+        write(1, "Error\nInvalid map: Map must consist 0, 1, P, E, C only. ", 57);
         return 0;      
     }
     if(!control_walls(game))
     {
-        perror("Invalid map: The map is not surrounded by walls. ");
+        write(1, "Error\nInvalid map: Map must be surrounded by walls. ", 53);
         return 0;     
     }
     if(player != 1 || exit != 1 || collectable < 1)
     {
-        perror("Invalid map: Number of elements are wrong. ");
+        write(1, "Error\nInvalid map: Number of elements are wrong. ", 50);
         return 0;      
     }
     game->collect_count = collectable;

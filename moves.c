@@ -6,7 +6,7 @@ int	close_win(t_game *game)
 	exit(0);
 	return (0);
 }
-static int	check_win_condition(t_game *game, int new_x, int new_y)
+static int	check_win(t_game *game, int new_x, int new_y)
 {
 	if (game->map[new_y][new_x] == 'E'
 		&& (game->collected == game->collect_count))
@@ -32,12 +32,11 @@ static void	move_player(t_game *game, int dx, int dy)
 		game->collected++;
 		game->map[new_y][new_x] = '0';
 	}
-	printf("%d", game->player_x);
 	game->player_x = new_x;
 	game->player_y = new_y;
-	printf("%d", game->player_x);
 	game->moves++;
-	check_win_condition(game, new_x, new_y);
+	ft_putnbr(game->moves);
+	check_win(game, new_x, new_y);
 }
 int	handle_movements(int keycode, t_game *game)
 {
@@ -46,13 +45,13 @@ int	handle_movements(int keycode, t_game *game)
 		close_game(game);
 		exit(0);
 	}
-	else if (keycode == KEY_W || keycode == KEY_UP)
+	else if (keycode == KEY_W)
 		move_player(game, 0, -1);
-	else if (keycode == KEY_S || keycode == KEY_DOWN)
+	else if (keycode == KEY_S)
 		move_player(game, 0, 1);
-	else if (keycode == KEY_A || keycode == KEY_LEFT)
+	else if (keycode == KEY_A)
 		move_player(game, -1, 0);
-	else if (keycode == KEY_D || keycode == KEY_RIGHT)
+	else if (keycode == KEY_D)
 		move_player(game, 1, 0);
 	draw_map(game);
 	return (0);
