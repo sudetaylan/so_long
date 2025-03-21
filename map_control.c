@@ -40,8 +40,8 @@ int control_elements(t_game *game, int *exit, int *collectable,int *player)
 			if (game->map[x][y] == 'P')
 			{
 				(*player)++;
-				game->player_x = x;
-				game->player_y = y;
+				game->player_x = y;
+				game->player_y = x;
 			}
 			else if (game->map[x][y] == 'E')
 				(*exit)++;
