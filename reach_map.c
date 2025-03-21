@@ -21,12 +21,14 @@ int copy_map(t_game *game, char **game_map)
 }
 
 void flood_fill(char **game_map, int p_x, int p_y, t_game *game)
-{
+{    
     if(p_x < 0 || p_x >= game->width || p_y < 0 || p_y >= game->height)
-        return ;
+        return;
     if(game_map[p_y][p_x] == '1' || game_map[p_y][p_x] == 'X')
-        return ;
+        return;
+        
     game_map[p_y][p_x] = 'X';
+    
     flood_fill(game_map, p_x - 1, p_y, game);
     flood_fill(game_map, p_x + 1, p_y, game);
     flood_fill(game_map, p_x, p_y - 1, game);

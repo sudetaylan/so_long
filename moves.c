@@ -36,7 +36,9 @@ static void	move_player(t_game *game, int dx, int dy)
 	game->player_y = new_y;
 	game->moves++;
 	ft_putnbr(game->moves);
-	check_win(game, new_x, new_y);
+	write(1, "\n", 1);
+	if(!check_win(game, new_x, new_y) && game->map[new_y][new_x] == 'E')
+		write(1, "You should collect all colectibles\n", 36);
 }
 int	handle_movements(int keycode, t_game *game)
 {
