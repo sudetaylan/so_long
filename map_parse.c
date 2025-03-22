@@ -71,7 +71,7 @@ static int	map_process(char **map, int fd, t_game *game)
 		game->width = ft_strlen(map[0]);	
 		if (!check_line_width(map, i, game->width))
 		{
-			free_map(map, i);
+			free_map(map, i + 1);
 			return (0);			
 		}
 		i++;
