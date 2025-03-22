@@ -1,11 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   moves.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: staylan <staylan@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/22 17:42:10 by staylan           #+#    #+#             */
+/*   Updated: 2025/03/22 17:42:44 by staylan          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
-#include <stdio.h>
-int	close_win(t_game *game)
-{
-	close_game(game);
-	exit(0);
-	return (0);
-}
+
 static int	check_win(t_game *game, int new_x, int new_y)
 {
 	if (game->map[new_y][new_x] == 'E'
@@ -37,9 +43,10 @@ static void	move_player(t_game *game, int dx, int dy)
 	game->moves++;
 	ft_putnbr(game->moves);
 	write(1, "\n", 1);
-	if(!check_win(game, new_x, new_y) && game->map[new_y][new_x] == 'E')
+	if (!check_win(game, new_x, new_y) && game->map[new_y][new_x] == 'E')
 		write(1, "You should collect all colectibles\n", 36);
 }
+
 int	handle_movements(int keycode, t_game *game)
 {
 	if (keycode == KEY_ESC)

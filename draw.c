@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: staylan <staylan@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/22 17:54:16 by staylan           #+#    #+#             */
+/*   Updated: 2025/03/22 17:54:49 by staylan          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
 static void	put_image(t_game *game, void *img, int x, int y)
@@ -6,33 +18,33 @@ static void	put_image(t_game *game, void *img, int x, int y)
 		y * game->tile_size);
 }
 
-static void	draw_image(t_game *game, int x, int y, char	element)
+static void	draw_image(t_game *game, int col, int row, char element)
 {
-	put_image(game, game->floor_img, x, y);
+	put_image(game, game->floor_img, col, row);
 	if (element == '1')
-		put_image(game, game->wall_img, x, y);
+		put_image(game, game->wall_img, col, row);
 	if (element == 'C')
-		put_image(game, game->collect_img, x, y);
+		put_image(game, game->collect_img, col, row);
 	if (element == 'E')
-		put_image(game, game->exit_img, x, y);
-	if (x == game->player_x && y == game->player_y)
-		put_image(game, game->player_img, x, y);
+		put_image(game, game->exit_img, col, row);
+	if (col == game->player_x && row == game->player_y)
+		put_image(game, game->player_img, col, row);
 }
 
 void	draw_map(t_game *game)
 {
-	int	y;
-	int	x;
+	int	row;
+	int	col;
 
-	y = 0;
-	while (y < game->height)
+	row = 0;
+	while (row < game->height)
 	{
-		x = 0;
-		while (x < game->width)
+		col = 0;
+		while (col < game->width)
 		{
-			draw_image(game, x, y, game->map[y][x]);
-			x++;
+			draw_image(game, col, row, game->map[row][col]);
+			col++;
 		}
-		y++;
+		row++;
 	}
 }

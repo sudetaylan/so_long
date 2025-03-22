@@ -1,68 +1,107 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_parse.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: staylan <staylan@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/22 17:35:03 by staylan           #+#    #+#             */
+/*   Updated: 2025/03/22 21:21:11 by staylan          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
-#include <stdio.h>
-static int get_size(char *filename, t_game *game)
-{
-    int height;
-    char *rows;
-    int fd;
 
-    height = 0;
-    fd = open(filename, O_RDONLY);
-    if(fd < 0)
-        return 0;
-    rows = get_next_line(fd);
-    game->width = map_rowlen(rows);
-    while (rows && ++height > 0)
-    {
-        free(rows);
-        rows = get_next_line(fd);
-        if(!rows)
-            return height;
-        if(map_rowlen(rows) != game->width)
-            return (-1);
-    }
-    close(fd);
-    return (height);
+static int	get_height(const char *filename)
+{
+	int		fd;
+	int		height;
+	char	buffer[2];
+	int		read_bytes;
+
+	height = 1;
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		return (-1);
+	read_bytes = 1;
+	while (read_bytes > 0)
+	{
+		read_bytes = read(fd, buffer, 1);
+		if (read_bytes > 0 && buffer[0] == '\n')
+			height++;
+	}
+	if (read_bytes == 0 && height == 0)
+		height = 1;
+	close(fd);
+	return (height);
 }
 
-static int    map_process(char **map, char *filename, t_game *game)
+static int	check_line_width(char **map, int i, int width)
 {
-    int j;
-    int fd;
-    char *line;
-
-    j = 0;
-    fd = open(filename, O_RDONLY);
-    if(fd < 0)
-        return 0;
-    while(j < game->height)
-    {
-        line = get_next_line(fd);
-        line[map_rowlen(line)] = '\0';
-        map[j] = line;
-        j++;
-    }
-    map[j] = NULL;
-    close(fd);
-    return 1;
+	if (i == 0)
+		return (1);
+	if (map_rowlen(map[i]) != width)
+		return (0);
+	return (1);
 }
 
-char **parse_map(char *filename, t_game *game)
+static void	clean_newline(char *line)
 {
-    char **map;
+	int	len;
 
-    game->height = get_size(filename, game);
-    if(game->height <= 0)
-    {   
-        if(game->height == 0)
-            perror("Map is empty. ");
-        else
-            perror("Map is not rectangle. ");
-        return (NULL);       
-    }
-    map = (char **)malloc(sizeof(char *) * (game->height + 1));    
-    if(!map)
-        return (NULL);
-    map_process(map, filename, game);
-    return map;
+	len = map_rowlen(line);
+	if (len > 0 && line[len - 1] == '\n')
+		line[len - 1] = '\0';
+}
+
+static int	map_process(char **map, int fd, t_game *game)
+{
+	char	*line;
+	int		i;
+
+	i = 0;
+	while (i < game->height)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			return (map[i] = NULL, 0);
+		clean_newline(line);
+		map[i] = line;
+		if (i == 0)
+			game->width = ft_strlen(map[0]);
+		i++;
+	}
+	map[i] = NULL;
+	i = 0;
+	while (i < game->height)
+	{
+		if (!check_line_width(map, i, game->width))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+char	**parse_map(char *filename, t_game *game)
+{
+	char	**map;
+	int		fd;
+
+	game->height = get_height(filename);
+	if (game->height == 0)
+	{
+		perror("Map is empty.");
+	}
+	map = (char **)malloc(sizeof(char *) * (game->height + 1));
+	if (!map)
+		return (NULL);
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		return (NULL);
+	if (!map_process(map, fd, game))
+	{
+		perror("Map is not rectangle. ");
+		return (0);
+	}
+	return (map);
 }

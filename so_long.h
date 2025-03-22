@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: staylan <staylan@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/22 17:53:55 by staylan           #+#    #+#             */
+/*   Updated: 2025/03/22 19:28:56 by staylan          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
@@ -43,18 +55,16 @@ typedef struct s_game
 	int		tile_size;
 }			t_game;
 
-int map_rowlen(char *row);
-char **parse_map(char *filename, t_game *game);
-int control_elements(t_game *game, int *exit, int *collectable,int *player);
-int control_walls(t_game *game);
-int check_map(t_game *game);
-int arg_check(char *str, char *p);
+int		map_rowlen(char *row);
+char	**parse_map(char *filename, t_game *game);
+int		check_map(t_game *game);
+int		arg_check(char *str, char *p);
 void	draw_map(t_game *game);
-int	close_win(t_game *game);
-int close_game(t_game *game);
-int	free_map(char **map, int height);
-int	handle_movements(int keycode, t_game *game);
-int	check_reachable(t_game *game);
+int		close_win(t_game *game);
+int		close_game(t_game *game);
+int		free_map(char **map, int height);
+int		handle_movements(int keycode, t_game *game);
+int		check_reachable(t_game *game);
 void	ft_putnbr(int nb);
 
 #endif

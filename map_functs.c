@@ -1,27 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_functs.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: staylan <staylan@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/22 17:31:56 by staylan           #+#    #+#             */
+/*   Updated: 2025/03/22 20:54:07 by staylan          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-int map_rowlen(char *row)
+int	map_rowlen(char *row)
 {
-    int i;
+	unsigned int	i;
 
-    i = 0;
-    while (row && row[i] != '\0' && row[i] != '\n')
-        i++;
-    return i;
+	i = 0;
+	while (row[i])
+		i++;
+	return (i);
 }
 
-int arg_check(char *str, char *p)
+int	arg_check(char *str, char *p)
 {
-    int i;
+	int	i;
 
-    i = map_rowlen(str) - 4;
-    while(str[i])
-    {
-        if(str[i++] != *p++)
-            return 0;
-    }
-    return 1;
+	i = map_rowlen(str) - 4;
+	while (str[i])
+	{
+		if (str[i++] != *p++)
+			return (0);
+	}
+	return (1);
 }
+
 static void	ft_putchar(char c)
 {
 	write(1, &c, 1);
@@ -35,7 +48,7 @@ void	ft_putnbr(int nb)
 	}
 	else if (nb < 0)
 	{
-		ft_putchar ('-');
+		ft_putchar('-');
 		nb = (-nb);
 		ft_putnbr(nb);
 	}
