@@ -6,7 +6,7 @@
 /*   By: staylan <staylan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 17:35:03 by staylan           #+#    #+#             */
-/*   Updated: 2025/03/22 21:21:11 by staylan          ###   ########.fr       */
+/*   Updated: 2025/03/22 22:13:53 by staylan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,21 +64,20 @@ static int	map_process(char **map, int fd, t_game *game)
 	{
 		line = get_next_line(fd);
 		if (!line)
-			return (map[i] = NULL, 0);
+			return(map[i] = NULL, 0);
 		clean_newline(line);
-		map[i] = line;
-		if (i == 0)
-			game->width = ft_strlen(map[0]);
-		i++;
-	}
-	map[i] = NULL;
-	i = 0;
-	while (i < game->height)
-	{
+		map[i] = ft_strdup(line);
+		free(line);
+		game->width = ft_strlen(map[0]);	
 		if (!check_line_width(map, i, game->width))
-			return (0);
+		{
+			free_map(map, i);
+			return (0);			
+		}
 		i++;
-	}
+	}	
+	map[i] = NULL;
+	free_map(map, i);
 	return (1);
 }
 
@@ -101,7 +100,9 @@ char	**parse_map(char *filename, t_game *game)
 	if (!map_process(map, fd, game))
 	{
 		perror("Map is not rectangle. ");
+		close(fd);
 		return (0);
 	}
+	close(fd);
 	return (map);
 }
