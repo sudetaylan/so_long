@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: staylan <staylan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: makbas <makbas@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/14 14:58:38 by yihakan           #+#    #+#             */
-/*   Updated: 2025/03/22 20:01:39 by staylan          ###   ########.fr       */
+/*   Created: 2022/11/23 15:01:53 by makbas            #+#    #+#             */
+/*   Updated: 2022/12/27 14:48:39 by makbas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include <fcntl.h>
 # include <stdlib.h>
 # include <unistd.h>
 
@@ -22,13 +21,11 @@
 # endif
 
 char	*get_next_line(int fd);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-size_t	ft_strlen(const char *str);
-char	*ft_strdup(const char *s1);
-char	*get_left(char *left);
-char	*get_line(char *buffer);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strjoin(char *s1, char const *s2);
-char	*get_buffer(int fd, char *left_str);
+char	*read_line(char *str, int fd);
+char	*read_first_line(char *str);
+char	*next_read(char *str);
 
+size_t	ft_gstrlen(const char *s);
+char	*ft_gstrchr(char *str, int c);
+char	*ft_gstrjoin(char *str, char *buff);
 #endif
