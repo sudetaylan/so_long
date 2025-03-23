@@ -6,7 +6,7 @@
 /*   By: staylan <staylan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 17:49:41 by staylan           #+#    #+#             */
-/*   Updated: 2025/03/22 21:22:09 by staylan          ###   ########.fr       */
+/*   Updated: 2025/03/23 16:36:53 by staylan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ static int	init_window(t_game *game)
 	game->mlx = mlx_init();
 	if (!game->mlx)
 	{
-		write(1, "Error\nmlx couldn't be initialized\n", 35);
+		write(2, "Error\nmlx couldn't be initialized\n", 35);
 		return (0);
 	}
 	game->win = mlx_new_window(game->mlx, game->width * game->tile_size,
 			game->height * game->tile_size, "so_long");
 	if (!game->win)
 	{
-		write(1, "Error\nWindow couldn't be initialized\n", 38);
+		write(2, "Error\nWindow couldn't be initialized\n", 38);
 		return (0);
 	}
 	return (1);
@@ -59,7 +59,7 @@ static int	load_textures(t_game *game)
 	if (!game->floor_img || !game->wall_img || !game->player_img
 		|| !game->collect_img || !game->exit_img)
 	{
-		write(1, "Error\nTextures couldn't be loaded\n", 29);
+		write(2, "Error\nTextures couldn't be loaded\n", 29);
 		return (0);
 	}
 	return (1);
@@ -85,12 +85,12 @@ int	main(int argc, char **argv)
 	init_param(&game);
 	if (argc != 2 || !arg_check(argv[1], ".ber"))
 	{
-		write(1, "Usage : ./so_long ./maps/'file_name'.ber ", 42);
+		write(2, "Usage : ./so_long ./maps/'file_name'.ber ", 42);
 		return (0);
 	}
 	if (!map_all_controls(argv[1], &game))
 	{
-		write(1, "Error\nMap initilization is unsuccesfull", 40);
+		write(2, "Error\nMap initilization is unsuccesfull", 40);
 		return (0);
 	}
 	draw_map(&game);

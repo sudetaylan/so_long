@@ -6,7 +6,7 @@
 /*   By: staylan <staylan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 17:42:10 by staylan           #+#    #+#             */
-/*   Updated: 2025/03/22 17:42:44 by staylan          ###   ########.fr       */
+/*   Updated: 2025/03/23 16:37:41 by staylan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	move_player(t_game *game, int dx, int dy)
 	ft_putnbr(game->moves);
 	write(1, "\n", 1);
 	if (!check_win(game, new_x, new_y) && game->map[new_y][new_x] == 'E')
-		write(1, "You should collect all colectibles\n", 36);
+		write(2, "You should collect all collectibles.\n", 38);
 }
 
 int	handle_movements(int keycode, t_game *game)

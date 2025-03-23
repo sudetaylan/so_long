@@ -6,7 +6,7 @@
 /*   By: staylan <staylan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 17:24:15 by staylan           #+#    #+#             */
-/*   Updated: 2025/03/23 14:35:31 by staylan          ###   ########.fr       */
+/*   Updated: 2025/03/23 16:35:32 by staylan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,17 +88,17 @@ int	check_map(t_game *game)
 	player = 0;
 	if (!control_elements(game, &player, &exit, &collect))
 	{
-		write(1, "Error\nMap must consist of 0, 1, P, E, C only. ", 57);
+		write(2, "Error\nMap must consist 0, 1, P, E, C only. ", 44);
 		return (0);
 	}
 	if (!control_walls(game))
 	{
-		write(1, "Error\nInvalid map: Map must be surrounded by walls. ", 53);
+		write(2, "Error\nInvalid map: Map must be surrounded by walls. ", 53);
 		return (0);
 	}
 	if (player != 1 || exit != 1 || collect < 1)
 	{
-		write(1, "Error\nInvalid map: Number of elements are wrong. ", 50);
+		write(2, "Error\nInvalid map: Number of elements are wrong. ", 50);
 		return (0);
 	}
 	game->collect_count = collect;

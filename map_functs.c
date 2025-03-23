@@ -6,7 +6,7 @@
 /*   By: staylan <staylan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 17:31:56 by staylan           #+#    #+#             */
-/*   Updated: 2025/03/23 14:42:01 by staylan          ###   ########.fr       */
+/*   Updated: 2025/03/23 17:51:20 by staylan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	map_rowlen(char *row)
 {
-	unsigned int	i;
+	int	i;
 
 	i = 0;
 	while (row[i])
@@ -53,16 +53,4 @@ void	clean_newline(char *line)
 	len = map_rowlen(line);
 	if (len > 0 && line[len - 1] == '\n')
 		line[len - 1] = '\0';
-}
-
-void	clean_fd(int fd)
-{
-	char	*line;
-
-	line = get_next_line(fd);
-	while (line)
-	{
-		free(line);
-		line = get_next_line(fd);
-	}
 }

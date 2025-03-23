@@ -6,26 +6,26 @@
 /*   By: staylan <staylan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 17:29:10 by staylan           #+#    #+#             */
-/*   Updated: 2025/03/22 17:31:35 by staylan          ###   ########.fr       */
+/*   Updated: 2025/03/23 17:03:34 by staylan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	free_map(char **map, int height)
+void	free_map(char **map, int height)
 {
 	int	i;
 
 	if (!map)
-		return (0);
+		return ;
 	i = 0;
-	while (i < height && map[i])
+	while (i < height)
 	{
-		free(map[i]);
+		if (map[i])
+			free(map[i]);
 		i++;
 	}
 	free(map);
-	return (1);
 }
 
 int	close_game(t_game *game)

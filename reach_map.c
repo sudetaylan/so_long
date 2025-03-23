@@ -6,7 +6,7 @@
 /*   By: staylan <staylan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 17:44:35 by staylan           #+#    #+#             */
-/*   Updated: 2025/03/22 17:49:07 by staylan          ###   ########.fr       */
+/*   Updated: 2025/03/23 16:36:01 by staylan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,14 @@ int	check_reachable(t_game *game)
 	game_map = malloc(sizeof(char *) * (game->height + 1));
 	if (!game_map || (!copy_map(game, game_map)))
 	{
-		write(1, "Error\nMap couldn't be copied. ", 31);
+		write(2, "Error\nMap couldn't be copied. ", 31);
 		return (0);
 	}
 	flood_fill(game_map, game->player_x, game->player_y, game);
 	result = compare_maps(game_map, game);
 	if (result == 0)
 	{
-		write(1, "Error\nSome parts of map are not accessible.\n", 45);
+		write(2, "Error\nSome parts of map are not accessible.\n", 45);
 	}
 	while (i < game->height)
 		free(game_map[i++]);

@@ -6,7 +6,7 @@
 /*   By: staylan <staylan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 17:35:03 by staylan           #+#    #+#             */
-/*   Updated: 2025/03/23 14:38:26 by staylan          ###   ########.fr       */
+/*   Updated: 2025/03/23 17:42:13 by staylan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,19 @@ static int	map_process(char **map, int fd, t_game *game)
 		if (!line)
 			return (map[i] = NULL, 0);
 		clean_newline(line);
-		map[i] = ft_strdup(line);
-		free(line);
-		game->width = map_rowlen(map[0]);
-		if (!check_line_width(map, i, game->width))
-		{
-			free_map(map, i + 1);
-			clean_fd(fd);
-			return (0);
-		}
+		map[i] = line;
+		if (i == 0)
+			game->width = map_rowlen(map[0]);
 		i++;
 	}
 	map[i] = NULL;
+	i = 0;
+	while (i < game->height)
+	{
+		if (!check_line_width(map, i, game->width))
+			return (0);
+		i++;
+	}
 	return (1);
 }
 
@@ -81,16 +82,18 @@ char	**parse_map(char *filename, t_game *game)
 	if (game->height == 0)
 	{
 		perror("Map is empty.");
+		return (NULL);
 	}
 	map = (char **)malloc(sizeof(char *) * (game->height + 1));
 	if (!map)
 		return (NULL);
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		return (NULL);
+		return (free(map), NULL);
 	if (!map_process(map, fd, game))
 	{
-		perror("Map is not rectangle. ");
+		free_map(map, game->height);
+		perror("Map is not rectangle.");
 		close(fd);
 		return (0);
 	}

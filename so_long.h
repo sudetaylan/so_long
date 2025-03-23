@@ -6,7 +6,7 @@
 /*   By: staylan <staylan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 17:53:55 by staylan           #+#    #+#             */
-/*   Updated: 2025/03/23 14:29:37 by staylan          ###   ########.fr       */
+/*   Updated: 2025/03/23 17:51:15 by staylan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,6 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-
-/*# define KEY_W 13
-# define KEY_A 0
-# define KEY_S 1
-# define KEY_D 2
-# define KEY_ESC 53*/
 
 # define KEY_W 119
 # define KEY_A 97
@@ -62,11 +56,10 @@ int		arg_check(char *str, char *p);
 void	draw_map(t_game *game);
 int		close_win(t_game *game);
 int		close_game(t_game *game);
-int		free_map(char **map, int height);
+void	free_map(char **map, int height);
 int		handle_movements(int keycode, t_game *game);
 int		check_reachable(t_game *game);
 void	ft_putnbr(int nb);
-void	clean_fd(int fd);
 void	clean_newline(char *line);
 
 #endif
