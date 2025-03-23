@@ -3,18 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: makbas <makbas@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: staylan <staylan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/23 15:02:05 by makbas            #+#    #+#             */
-/*   Updated: 2022/12/27 14:49:03 by makbas           ###   ########.fr       */
+/*   Created: 2024/12/14 14:58:59 by yihakan           #+#    #+#             */
+/*   Updated: 2025/03/22 21:23:38 by staylan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_gstrlen(const char *str)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
+	char	*str;
 	size_t	i;
+
+	i = 0;
+	if (!s)
+		return (NULL);
+	if (ft_strlen(s) < start)
+		return (ft_strdup(""));
+	str = (char *)malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (NULL);
+	while (i < len && s[start] != '\0')
+	{
+		str[i] = s[start];
+		i++;
+		start++;
+	}
+	str[i] = '\0';
+	return (str);
+}
+
+char	*ft_strdup(const char *s1)
+{
+	char	*str;
+	int		i;
+
+	i = 0;
+	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + 1));
+	if (!str)
+		return (NULL);
+	while (s1[i] != '\0')
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
+}
+
+size_t	ft_strlen(const char *str)
+{
+	int	i;
 
 	i = 0;
 	while (str[i] != '\0')
@@ -22,48 +63,49 @@ size_t	ft_gstrlen(const char *str)
 	return (i);
 }
 
-char	*ft_gstrchr(char *str, int c)
+char	*ft_strchr(const char *s, int c)
 {
-	int		i;
+	int	i;
 
 	i = 0;
-	if (!str)
-		return (0);
-	if (c == '\0')
-		return ((char *)&str[ft_gstrlen(str)]);
-	while (str[i] != '\0')
+	if (!s)
+		return (NULL);
+	while (s[i] != '\0')
 	{
-		if (str[i] == (char)c)
-			return ((char *)&str[i]);
+		if (s[i] == c)
+			return ((char *)s + i);
 		i++;
 	}
-	return (0);
+	if (s[i] == c)
+		return ((char *)s + i);
+	return (NULL);
 }
 
-char	*ft_gstrjoin(char *str, char *buff)
+char	*ft_strjoin(char *s1, char const *s2)
 {
-	size_t	c;
-	size_t	i;
-	char	*new_str;
+	char	*str;
+	int		i;
+	int		j;
 
-	if (!str)
+	i = -1;
+	j = 0;
+	if (!s1)
 	{
-		str = (char *)malloc(sizeof(char));
-		str[0] = '\0';
+		s1 = malloc(1 * sizeof(char));
+		*s1 = '\0';
 	}
-	if (!str || !buff)
+	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!str)
 		return (NULL);
-	new_str = malloc(sizeof(char) * ((ft_gstrlen(str)) + ft_gstrlen(buff) + 1));
-	if (new_str == NULL)
-		return (NULL);
-	c = -1;
-	i = 0;
-	if (str)
-		while (str[++c] != '\0')
-			new_str[c] = str[c];
-	while (buff[i] != '\0')
-		new_str[c++] = buff[i++];
-	new_str[c] = '\0';
-	free(str);
-	return (new_str);
+	while (s1[++i] != '\0')
+		str[i] = s1[i];
+	while (s2[j] != '\0')
+	{
+		str[i] = s2[j];
+		i++;
+		j++;
+	}
+	str[i] = '\0';
+	free(s1);
+	return (str);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sude <sude@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: staylan <staylan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 17:35:03 by staylan           #+#    #+#             */
-/*   Updated: 2025/03/23 02:32:57 by sude             ###   ########.fr       */
+/*   Updated: 2025/03/23 13:53:29 by staylan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,18 @@ static void	clean_newline(char *line)
 		line[len - 1] = '\0';
 }
 
+void clean_fd(int fd)
+{
+	char *line;
+	
+	line = get_next_line(fd);
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
+}
+
 static int	map_process(char **map, int fd, t_game *game)
 {
 	char	*line;
@@ -68,16 +80,16 @@ static int	map_process(char **map, int fd, t_game *game)
 		clean_newline(line);
 		map[i] = ft_strdup(line);
 		free(line);
-		game->width = ft_strlen(map[0]);	
+		game->width = map_rowlen(map[0]);
 		if (!check_line_width(map, i, game->width))
 		{
 			free_map(map, i + 1);
+			clean_fd(fd);
 			return (0);			
 		}
 		i++;
-	}	
+	}
 	map[i] = NULL;
-	free_map(map, i);
 	return (1);
 }
 
