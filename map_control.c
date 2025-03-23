@@ -6,11 +6,24 @@
 /*   By: staylan <staylan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 17:24:15 by staylan           #+#    #+#             */
-/*   Updated: 2025/03/22 21:09:32 by staylan          ###   ########.fr       */
+/*   Updated: 2025/03/23 14:35:31 by staylan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+int	arg_check(char *str, char *p)
+{
+	int	i;
+
+	i = map_rowlen(str) - 4;
+	while (str[i])
+	{
+		if (str[i++] != *p++)
+			return (0);
+	}
+	return (1);
+}
 
 static int	control_elements(t_game *game, int *player, int *exit, int *collect)
 {

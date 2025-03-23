@@ -6,7 +6,7 @@
 /*   By: staylan <staylan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 17:35:03 by staylan           #+#    #+#             */
-/*   Updated: 2025/03/23 13:53:29 by staylan          ###   ########.fr       */
+/*   Updated: 2025/03/23 14:38:26 by staylan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	get_height(const char *filename)
 {
 	int		fd;
 	int		height;
-	char	buffer[2];
+	char	buffer[1];
 	int		read_bytes;
 
 	height = 1;
@@ -45,27 +45,6 @@ static int	check_line_width(char **map, int i, int width)
 	return (1);
 }
 
-static void	clean_newline(char *line)
-{
-	int	len;
-
-	len = map_rowlen(line);
-	if (len > 0 && line[len - 1] == '\n')
-		line[len - 1] = '\0';
-}
-
-void clean_fd(int fd)
-{
-	char *line;
-	
-	line = get_next_line(fd);
-	while (line)
-	{
-		free(line);
-		line = get_next_line(fd);
-	}
-}
-
 static int	map_process(char **map, int fd, t_game *game)
 {
 	char	*line;
@@ -76,7 +55,7 @@ static int	map_process(char **map, int fd, t_game *game)
 	{
 		line = get_next_line(fd);
 		if (!line)
-			return(map[i] = NULL, 0);
+			return (map[i] = NULL, 0);
 		clean_newline(line);
 		map[i] = ft_strdup(line);
 		free(line);
@@ -85,7 +64,7 @@ static int	map_process(char **map, int fd, t_game *game)
 		{
 			free_map(map, i + 1);
 			clean_fd(fd);
-			return (0);			
+			return (0);
 		}
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: staylan <staylan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 17:31:56 by staylan           #+#    #+#             */
-/*   Updated: 2025/03/22 20:54:07 by staylan          ###   ########.fr       */
+/*   Updated: 2025/03/23 14:42:01 by staylan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,6 @@ int	map_rowlen(char *row)
 	return (i);
 }
 
-int	arg_check(char *str, char *p)
-{
-	int	i;
-
-	i = map_rowlen(str) - 4;
-	while (str[i])
-	{
-		if (str[i++] != *p++)
-			return (0);
-	}
-	return (1);
-}
-
 static void	ft_putchar(char c)
 {
 	write(1, &c, 1);
@@ -43,9 +30,7 @@ static void	ft_putchar(char c)
 void	ft_putnbr(int nb)
 {
 	if (nb == -2147483648)
-	{
 		write(1, "-2147483648", 11);
-	}
 	else if (nb < 0)
 	{
 		ft_putchar('-');
@@ -59,4 +44,25 @@ void	ft_putnbr(int nb)
 	}
 	else
 		ft_putchar(nb + '0');
+}
+
+void	clean_newline(char *line)
+{
+	int	len;
+
+	len = map_rowlen(line);
+	if (len > 0 && line[len - 1] == '\n')
+		line[len - 1] = '\0';
+}
+
+void	clean_fd(int fd)
+{
+	char	*line;
+
+	line = get_next_line(fd);
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
 }

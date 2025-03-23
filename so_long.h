@@ -6,7 +6,7 @@
 /*   By: staylan <staylan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 17:53:55 by staylan           #+#    #+#             */
-/*   Updated: 2025/03/22 19:28:56 by staylan          ###   ########.fr       */
+/*   Updated: 2025/03/23 14:29:37 by staylan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,7 @@ int		free_map(char **map, int height);
 int		handle_movements(int keycode, t_game *game);
 int		check_reachable(t_game *game);
 void	ft_putnbr(int nb);
+void	clean_fd(int fd);
+void	clean_newline(char *line);
 
 #endif
